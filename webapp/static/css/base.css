@@ -1,0 +1,84 @@
+.header_icon{
+    display: flex;
+    list-style: none;
+}
+.header_icon #logo{
+    width: 10%;
+    height:10%;
+}
+.menu_icon{
+    width: 24%;
+    height: 34%;
+    padding: 13% 0 13% 30%;
+}   
+#logo_icon{
+    display: flex;
+    width: 20%;
+    height: 10%;
+}
+.camera_icon{
+    display: flex;
+    height: 35%;
+    width: 28%;
+    padding: 17% 0 14% 0;
+    /* width: 100%; */
+    /* padding: 14% 0 14% 14%; */
+}
+#logo_icon a{
+    display: flex;
+}
+#logo_icon a p{
+    width: 30%;
+    font-size: 26px;
+    padding-top: 16.5%;
+    list-style: none;
+    text-decoration: none;
+    color: #000;
+}
+#logo_icon a{
+    text-decoration: none;
+}
+/* #logo_icon a{
+    width: 40%;
+    
+} */
+#logo_name{
+    padding: 8% 0 21% 0;
+    font-size: 40px;
+}
+
+/* menu after hover */
+.nav_icon li a img{
+    width: 2%;
+    padding: 1% 2% 1% 2%;
+}
+.nav_icon li a{
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+.nav_icon li a p{
+    padding-top: 1.5%;
+}
+.sub_nav{
+    position: fixed;
+    bottom: 10px;
+}
+.sub_nav_icon{
+    
+    bottom: 0;
+}
+.sub_nav_icon li a img{
+    
+    width: 15%;
+    padding: 10% 2% 10% 12%;
+}
+.sub_nav_icon li a{
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+.sub_nav_icon li a p{
+    padding-top: 15%;
+    padding-left: 11%;
+}
