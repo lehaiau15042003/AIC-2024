@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DWB</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}">
+
     <style>
         body{
             font-family: Arial, Helvetica, sans-serif;
@@ -15,29 +17,29 @@
             
         }
     </style>
-    <link rel="stylesheet" href="/AIC-2024/webapp/static/css/base.css">
+    <link rel="stylesheet" href="/webapp/static/css/base.css">
 </head>
 <body>
     <div>
         <ul class="header_icon">
-            <li id="logo"><a href=""><img src="/static/icons8-menu-96.png" alt="" class="menu_icon"></a></li>
-            <li id="logo_icon"><a href=""><img src="/static/icons8-video-camera-100.png" alt="" class="camera_icon"><p id="logo_name">DWB</p></a>
+            <li id="logo"><a href=""><img src="{{url_for('static', filename='images/icons8-menu-96.png') }}" alt="" class="menu_icon"></a></li>
+            <li id="logo_icon"><a href=""><img src="{{ url_for('static', filename='images/icons8-video-camera-100.png') }}" alt="" class="camera_icon"><p id="logo_name">DWB</p></a>
                 
             </li>
             
         </ul>
         <ul class="nav_icon">
-            <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-home-96.png" alt=""><p>Trang chủ</p></a></li>
-            <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-checkmark-96.png" alt=""><p>Video đã xem</p></a></li>
-            <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-start-96.png" alt=""><p>Danh sách phát</p></a></li>
-            <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-heart-96.png" alt=""><p>Video đã thích</p></a></li>
+            <li><a href=""><img src="{{ url_for('static', filename='images/icons8-home-96.png') }}" alt=""><p>Trang chủ</p></a></li>
+            <li><a href=""><img src="{{ url_for('static', filename='images/icons8-checkmark-96.png') }}" alt=""><p>Video đã xem</p></a></li>
+            <li><a href=""><img src="{{ url_for('static', filename='images/icons8-start-96.png') }}" alt=""><p>Danh sách phát</p></a></li>
+            <li><a href=""><img src="{{ url_for('static', filename='images/icons8-heart-96.png') }}" alt=""><p>Video đã thích</p></a></li>
             
         </ul>
         <div class="sub_nav">
             <ul class="sub_nav_icon">
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-setting-96.png" alt=""><p>Cài đặt</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-ask-96.png" alt=""><p>Trợ giúp</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-exclamation-mark-96.png" alt=""><p>Gửi ý kiến phản hồi</p></a></li>
+                <li><a href=""><img src="{{ url_for('static', filename='images/icons8-setting-96.png') }}" alt=""><p>Cài đặt</p></a></li>
+                <li><a href=""><img src="{{ url_for('static', filename='images/icons8-ask-96.png') }}" alt=""><p>Trợ giúp</p></a></li>
+                <li><a href=""><img src="{{ url_for('static', filename='images/icons8-exclamation-mark-96.png') }}" alt=""><p>Gửi ý kiến phản hồi</p></a></li>
             </ul>
         </div>
     </div>

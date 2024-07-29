@@ -1,3 +1,4 @@
 {
-  "Interpreter": "Workspace|Workspace|venv"
+  "Interpreter": "Workspace|Workspace|venv",
+  "SuppressPackageInstallationPrompt": true
 }
