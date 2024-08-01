@@ -63,9 +63,3 @@ body {
 #button:hover {
     background-color: #0056b3;
 }
-
-#error-message {
-    color: red;
-    display: {{ 'block' if error_message else 'none' }};
-    margin-top: 10px;
-}
