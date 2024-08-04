@@ -3,117 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DWB</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/base.css') }}">
     <style>
-        body{
+        body {
             font-family: Arial, Helvetica, sans-serif;
         }
-        *{
+        * {
             padding: 0;
             margin: 0;
             border: 0;
-            
         }
     </style>
-    <link rel="stylesheet" href="/AIC-2024/webapp/static/css/base.css">
-    
 </head>
 <body>
     <div>
         <ul class="header_icon">
-            <li id="logo"><a href=""><img src="/static/icons8-menu-96.png" alt="" class="menu_icon"></a></li>
-            <li id="logo_icon"><a href=""><img src="/static/icons8-video-camera-100.png" alt="" class="camera_icon"><p id="logo_name">DWB</p></a>
-                
+            <li id="logo">
+                <a href="#"><img src="{{ url_for('static', path='images/icons8-menu-96.png') }}" alt="" class="menu_icon"></a>
+            </li>
+            <li id="logo_icon">
+                <a href="#"><img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="" class="camera_icon">
+                <p id="logo_name">DWB</p></a>
             </li>
             <div>
                 <div class="header_search">
                     <input type="text" id="enter_search">
                     <form action="">
-                        <button id="#button">
-                            <img src="/AIC-2024/webapp/static/images/icons8-search-96.png" alt="" id="button_search">
+                        <button id="button">
+                            <img src="{{ url_for('static', path='images/icons8-search-96.png') }}" alt="" id="button_search">
                         </button>
                     </form>
                 </div>
             </div>
             <div class="header_user">
-        
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-user-96.png" alt=""></a></li>
+                <li><a href="#"><img src="{{ url_for('static', path='images/icons8-user-96.png') }}" alt=""></a></li>
             </div>
         </ul>
 
         <ul class="nav_icon" style="display: flex;">
             <div>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-home-96.png" alt=""><p>Trang chủ</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-checkmark-96.png" alt=""><p>Video đã xem</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-start-96.png" alt=""><p>Danh sách phát</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-heart-96.png" alt=""><p>Video đã thích</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-upload-96.png" alt=""><p>Đăng tải video</p></a></li>
+                <ul class="nav_icon">
+                    <li><a href="#"><img src="{{ url_for('static', path='images/icons8-home-96.png') }}" alt=""><p>Trang chủ</p></a></li>
+                    <li><a href="#"><img src="{{ url_for('static', path='images/icons8-checkmark-96.png') }}" alt=""><p>Video đã xem</p></a></li>
+                    <li><a href="#"><img src="{{ url_for('static', path='images/icons8-start-96.png') }}" alt=""><p>Danh sách phát</p></a></li>
+                    <li><a href="#"><img src="{{ url_for('static', path='images/icons8-heart-96.png') }}" alt=""><p>Video đã thích</p></a></li>
+                    <li><a href="#"><img src="{{ url_for('static', path='images/icons8-upload-96.png') }}" alt=""><p>Đăng tải video</p></a></li>
+                </ul>
             </div>
-            <div class="video_body" style="position: absolute; margin-left: 9%;padding-bottom: 6%;">
+            <div class="video_body" style="position: absolute; margin-left: 9%; padding-bottom: 6%;">
                 <div style="display: flex; width: 100%; flex-direction: row; justify-content: flex-end; padding-top: 1%;">
-                    <a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
                         <p></p>
                     </a>
-                    <a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
-                        <p></p>
-                    </a><a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
                         <p></p>
                     </a>
-                </div>
-                <div style="display: flex; width: 100%;flex-direction: row; justify-content: flex-end; padding-top: 8em;">
-                    <a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
-                        <p></p>
-                    </a>
-                    <a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
-                        <p></p>
-                    </a><a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
                         <p></p>
                     </a>
                 </div>
-                <div style="display: flex; width: 100%;flex-direction: row; justify-content: flex-end; padding-top: 8em;">
-                    <a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
+                <div style="display: flex; width: 100%; flex-direction: row; justify-content: flex-end; padding-top: 8em;">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
                         <p></p>
                     </a>
-                    <a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
                         <p></p>
-                    </a><a href="">
-                        <img src="/AIC-2024/webapp/static/images/Au_ngu.jpg" alt="">
+                    </a>
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
+                        <p></p>
+                    </a>
+                </div>
+                <div style="display: flex; width: 100%; flex-direction: row; justify-content: flex-end; padding-top: 8em;">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
+                        <p></p>
+                    </a>
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
+                        <p></p>
+                    </a>
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/Au_ngu.jpg') }}" alt="">
                         <p></p>
                     </a>
                 </div>
             </div>
         </ul>
-        
         <div class="sub_nav">
             <ul class="sub_nav_icon">
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-setting-96.png" alt=""><p>Cài đặt</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-ask-96.png" alt=""><p>Trợ giúp</p></a></li>
-                <li><a href=""><img src="/AIC-2024/webapp/static/images/icons8-exclamation-mark-96.png" alt=""><p>Gửi ý kiến phản hồi</p></a></li>
+                <li><a href="#"><img src="{{ url_for('static', path='images/icons8-setting-96.png') }}" alt=""><p>Cài đặt</p></a></li>
+                <li><a href="#"><img src="{{ url_for('static', path='images/icons8-ask-96.png') }}" alt=""><p>Trợ giúp</p></a></li>
+                <li><a href="#"><img src="{{ url_for('static', path='images/icons8-exclamation-mark-96.png') }}" alt=""><p>Gửi ý kiến phản hồi</p></a></li>
             </ul>
         </div>
-        <!-- <div>
-            <div class="header_search">
-                <input type="text" >
-                <div><img src="/AIC-2024/webapp/static/images/icons8-search-96.png" alt=""></div>
-            </div>
-        </div> -->
     </div>
     <div>
         <div>
-            <a href=""><img src="" alt=""></a>
+            <a href="#"><img src="" alt=""></a>
         </div>
         <div>
-            <a href=""><img src="" alt=""></a>
+            <a href="#"><img src="" alt=""></a>
         </div>
     </div>
-    
+    <script src="{{ url_for('static', path='js/script.js') }}"></script>
 </body>
 </html>

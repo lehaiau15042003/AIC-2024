@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
+    <style> 
         *{
             border: 0;
             padding: 0;
             margin: 0;
             font-family:Arial, Helvetica, sans-serif;
         }
+
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
     </style>
     <div id="header_logo">
-        <img src="/AIC-2024/webapp/static/images/icons8-video-camera-100.png" alt="" style="width: 10%; place-items: center; ">
-        <h1 ><a href="" style="list-style: none;text-decoration: none; color: black; font-size: 6rem; ">DWB</a></h1>
+        <img src="{{ url_for('static', filename='images/icons8-video-camera-100.png') }}" alt="" style="width: 10%; place-items: center;">
+        <h1 ><a href="" style="list-style: none;text-decoration: none; color: black; font-size: 6rem; padding-top: 0;">DWB</a></h1>
     </div>
-    <link rel="stylesheet" href="/AIC-2024/webapp/static/css/login.css">
+    <link rel="stylesheet" href="/webapp/static/css/login.css">
 </head>
 <body>
-    <div id="user">
-        <input type="text" id="border_user" placeholder="Enter your user name">
-        
-    </div>
-    <div id="password">
-        <input type="password" id="border_pass" placeholder="Enter your password">
-    </div>
-    <button id="button">
-        <p>LOG IN</p>
-    </button>
+    <form action="#" id="login-form" method="post">
+        <div id="user">
+            <input type="text" id="border_user" name="name" placeholder="Enter your user name" required>
+        </div>
+        <div id="password">
+            <input type="password" id="border_pass" name="password" placeholder="Enter your password" required>
+        </div>
+        <button id="button" type="submit">
+            <p>LOG IN</p>
+        </button>
+        <p id="error-message">{{error}}</p>
+    </form>
+    <script src="script.js"></script>
 </body>
 </html>
