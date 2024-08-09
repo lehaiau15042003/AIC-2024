@@ -1,0 +1,74 @@
+nav{
+    border: 1px solid rgb(215, 215, 215);
+
+    background-color: rgb(215, 215, 215);
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    
+}
+.close_slide{
+    position: fixed;
+    width: 5%;
+    height: fit-content;
+    padding: 1% 1.2%;
+    top: 0;
+}
+.close_slide ul li a img{
+    width: 100%;
+}
+.menu_icon{
+    display: flex;
+    padding: 70% 10%;
+    width: 15%;
+    flex-direction: column;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+}
+.menu_icon ul li{
+    padding-top: 40%;
+}
+.menu_icon ul li a img{
+    width: 100%;
+}
+.support{
+    padding-top: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    /* padding: 50% 10%; */
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    bottom: 0;
+}
+.support ul li{
+    padding-top: 2%;
+}
+.support ul li a img{
+    width: 15%;
+}
+main{
+    width: 80%;
+    margin: 0;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+#input{
+    
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+#text_input{
+    
+    border: 3px solid black;
+    width: 600px;
+    height: 5vh;
+    border-radius: 20px 0 0 20px;
+}

@@ -4,7 +4,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from pydantic import BaseModel
 from pathlib import Path
-from PIL import Image
 import base64
 from io import BytesIO
 import shutil
