@@ -27,50 +27,28 @@ document.getElementById('file-input').addEventListener('change', function(event)
     }
 });
 
-document.getElementById('upload-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const fileInput = document.getElementById('file-input');
-    const file = fileInput.files[0];
+async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append('file', file);
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onloadend = function() {
-            const base64String = reader.result.split(',')[1];
+    const response = await fetch('http://localhost:8000/predict', {
+        method: 'POST',
+        body: formData
+    });
 
-            const jsonData = JSON.stringify({
-                fileName: file.name,
-                fileType: file.type,
-                fileContent: base64String
-            });
+    const result = await response.json();
+    return result;
+}
 
-            fetch('/upload', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: jsonData
-            })
-            .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    return response.json().then(data => {
-                        if (data.message === 'File uploaded successfully') {
-                            window.location.href = 'upload/result?file_url=${encodeURIComponent(data.file_url)}';
-                        } else {
-                            alert("Upload Failed: " + data.error);
-                        }
-                    })
-                }
-            })
-            
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Upload Failed: ' + error.message);
-            });
-        };
-        reader.readAsDataURL(file);
-    } else {
-        alert('Please select a file to upload.');
-    }
-});
+async function UploadVideo(file){
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('http://localhost:8000/predict', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.json();
+    return result;
+}
