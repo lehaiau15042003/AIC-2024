@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/page_result.css') }}">
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
             border: 0;
@@ -15,39 +15,34 @@
             font-family: Arial, Helvetica, sans-serif;
         }
     </style>
+</head>
+<body class="container">
     <header>
         <div class="logo">
             <li><a href=""><img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="" id="logo"></a></li>
             <li><a href=""></a><h1>DWB</h1></li>
         </div>
-        <div class="nav_menu" >
+        <div class="nav_menu">
            <ul>
-            <li>
-                <a href=""><h2>Về chúng tôi</h2></a>
-            </li>
-            <li>
-                <a href=""><h2>Liên lạc</h2></a>
-            </li>
-            <li>
-                <a href=""><h2>Lịch sử</h2></a>
-            </li>
-            <li>
-                <a href=""><h2>Hỗ trợ</h2></a>
-            </li>
+            <li><a href=""><h2>Về chúng tôi</h2></a></li>
+            <li><a href=""><h2>Liên lạc</h2></a></li>
+            <li><a href=""><h2>Lịch sử</h2></a></li>
+            <li><a href=""><h2>Hỗ trợ</h2></a></li>
            </ul>
         </div>
     </header>
-</head>
-<body class="container">
-    <aside class="result">
+
+    <aside class="result" id="result">
         <div>
-            <img src="{{ url_for('static', path='images/cat.jpg') }}" alt="">
+            <img src="{{file_url}}" alt="Uploaded Image">
+            <video src="{{file_url}}" alt="Uploaded Video">
         </div>
     </aside>
+
     <label for="" class="label">
         <div>
             <div class="inf_result">
-                <p>Thông tin của sản phẩm: </p>
+                <p>Thông tin của sản phẩm:</p>
                 <p>Thông tin xuất hiện:</p>
             </div>
         </div>
