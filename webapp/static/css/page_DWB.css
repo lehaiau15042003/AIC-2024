@@ -15,7 +15,7 @@ nav{
     top: 0;
 }
 .close_slide ul li a img{
-    width: 100%;
+    width: 70%;
 }
 .menu_icon{
     display: flex;
@@ -58,17 +58,37 @@ main{
     justify-content: space-between;
 
 }
-#input{
-    
-    left: 0;
+
+#search-box{
     display: flex;
-    justify-content: center;
-    align-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 300px;
+    margin: 20px auto;
+    background: rgb(215, 215, 215);
+    border-radius: 30px;
 }
-#text_input{
-    
-    border: 3px solid black;
-    width: 600px;
-    height: 5vh;
-    border-radius: 20px 0 0 20px;
+
+#search-box #search-text{
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 18px;
+    width: 0;
+    padding: 0;
+    transition: all 0.25s ease-in-out;
+}
+
+#search-box:hover #search-text, #search-box #search-text:valid{
+    width: 300px;
+    padding: 10px 0px 15px 15px;
+}
+
+#search-box #search-btn{
+    background-color: #fff;
+    cursor: pointer;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 18px;
 }

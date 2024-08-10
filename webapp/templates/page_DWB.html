@@ -3,41 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Mô tả ngắn về trang web của bạn">
+    <meta name="keywords" content="từ khóa, liên quan, đến, trang web">
+    <title>DWB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', path='css/page_DWB.css') }}">
     <style>
-        *{
+        * {
             padding: 0;
             border: 0;
             margin: 0;
             list-style: none;
         }
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
     </style>
-    <link rel="stylesheet" href="/webapp/static/css/page_DWB.css">
 </head>
-<body style="display: flex; height: 100vh; overflow: hidden;">
+<body>
     <nav>
         <div class="close_slide">
             <ul>
-                <li><a href=""><img src="/webapp/static/images/icons8-menu-96.png" alt=""></a></li>
+                <li><a href="#"><img src="{{ url_for('static', path='images/icons8-menu-96.png') }}" alt="Menu"></a></li>
             </ul>
         </div>
         <div class="menu_icon">
             <ul>
                 <li>
-                    <a href="" >
-                        <img src="/webapp/static/images/icons8-home-96.png" alt="">
+                    <a href="#">
+                        <img src="{{url_for('static', path='images/icons8-home-96.png') }}" alt="Home">
                         <p></p>
                     </a>
                 </li>
                 <li>
-                    <a href="" >
-                        <img src="/webapp/static/images/icons8-upload-96.png" alt="">
+                    <a href="/upload">
+                        <img src="{{ url_for('static', path='images/icons8-upload-96.png') }}" alt="Upload">
                         <p></p>
                     </a>
                 </li>
                 <li>
-                    <a href="" >
-                        <img src="/webapp/static/images/icons8-checkmark-96.png" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-checkmark-96.png') }}" alt="Check">
                         <p></p>
                     </a>
                 </li>
@@ -46,24 +55,23 @@
         <div class="support">
             <ul>
                 <li>
-                    <a href="" >
-                        <img src="/webapp/static/images/icons8-exclamation-mark-96.png" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-exclamation-mark-96.png') }}" alt="Support">
                         <p></p>
-                </a>
-            </li>
+                    </a>
+                </li>
                 <li>
-
-                    <a href="" >
-                        <img src="/webapp/static/images/icons8-ask-96.png" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-ask-96.png') }}" alt="Help">
                         <p></p>
-                </a>
-            </li>
+                    </a>
+                </li>
                 <li>
-                    <a href="" >
-                        <img src="/webapp/static/images/icons8-setting-96.png" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-setting-96.png') }}" alt="Settings">
                         <p></p>
-                </a>
-            </li>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -71,20 +79,17 @@
         <div class="id_header">
             <ul>
                 <li>
-                    <a href="">
-                        <img src="/webapp/static/images/icons8-video-camera-100.png" alt="">
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="Video Camera">
                         <p>DWB</p>
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="inform">
-
-        </div>
-        <div id="input">
-            <input type="text" id="text_input">
-            <button><a href=""><img src="/webapp/static/images/icons8-search-96.png" alt=""></a></button>
-        </div>
+        <form action="" id="search-box">
+            <input type="text" id="search-text" placeholder="What are you looking for?" required>
+            <button id="search-btn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
     </main>
 </body>
 </html>

@@ -18,7 +18,7 @@ app.mount("/static", StaticFiles(directory="webapp/static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse("base.html", {"request": request})
+    return templates.TemplateResponse("page_DWB.html", {"request": request})
 
 @app.get("/upload", response_class=HTMLResponse)
 async def upload_page(request: Request):
