@@ -52,3 +52,14 @@ async function UploadVideo(file){
     const result = await response.json();
     return result;
 }
+
+// Close_slide
+document.getElementsByClassName('close_slide').addEventListener('click',function(){
+    var content = document.getElementById('content');
+    if (content.classList.contains('hidden')){
+        content.classList.remove('hidden');
+    }
+    else{
+        content.classList.add('hidden');
+    }
+});
