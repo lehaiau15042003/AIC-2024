@@ -89,8 +89,12 @@
         </div>
         <form action="" id="search-box">
             <input type="text" id="search-text" placeholder="What are you looking for?" required>
-            <button id="search-btn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
+        <div id="video-gallery">
+
+        </div>
     </main>
+    <script src="{{ url_for('static', path='js/search.js') }}"></script>
 </body>
 </html>

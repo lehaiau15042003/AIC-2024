@@ -14,13 +14,14 @@
             text-decoration: none;
             font-family: Arial, Helvetica, sans-serif;
         }
+
     </style>
 </head>
 <body class="container">
     <header>
         <div class="logo">
-            <li><a href=""><img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="" id="logo"></a></li>
-            <li><a href=""></a><h1>DWB</h1></li>
+            <li><a href="/"><img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="" id="logo"></a></li>
+            <li><a href="/"></a><h1>DWB</h1></li>
         </div>
         <div class="nav_menu">
            <ul>
@@ -34,18 +35,17 @@
 
     <aside class="result" id="result">
         <div>
-            <img src="{{file_url}}" alt="Uploaded Image">
-            <video src="{{file_url}}" alt="Uploaded Video">
+            <video src="{{file_url}}" class="video-preview" alt="Uploaded Video" controls></video>
         </div>
     </aside>
-
     <label for="" class="label">
         <div>
             <div class="inf_result">
                 <p>Thông tin của sản phẩm:</p>
-                <p>Thông tin xuất hiện:</p>
+                <p id="prediction-info">Thông tin xuất hiện: {{ predictions }}</p>
             </div>
         </div>
-    </label>
+    </label> 
+    <script src="{{ url_for('static', path='js/file_upload.js') }}"></script>
 </body>
 </html>
