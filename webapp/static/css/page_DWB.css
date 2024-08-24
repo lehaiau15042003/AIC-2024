@@ -19,7 +19,7 @@ nav{
 }
 .menu_icon{
     display: flex;
-    padding: 40% 10%;
+    padding: 40% 5% !important;
     width: fit-content;
     flex-direction: column;
     height: fit-content;
@@ -39,7 +39,7 @@ nav{
     height: 100%;
 }
 .menu_icon ul li a img{
-    width: 50%;
+    width: 30%;
 }
 .menu_icon ul li a p{
     position: fixed;
@@ -47,7 +47,7 @@ nav{
     margin: 3px 0 0 3.3%;
     white-space: nowrap;
     width: 40%;
-    font-size: 1.7em;
+    font-size: 1.1em;
     color: black
 }
 .support{
