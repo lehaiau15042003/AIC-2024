@@ -7,8 +7,8 @@ from PIL import Image
 import numpy as np
 import os
 import shutil
-import torch
-import clip
+# import torch
+# import clip
 import io
 
 app = FastAPI()
