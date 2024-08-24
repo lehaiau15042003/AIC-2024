@@ -1,94 +1,212 @@
-nav{
-    border: 1px solid rgb(215, 215, 215);
-    background-color: rgb(215, 215, 215);
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
+}
+
+nav {
+    border-right: 1px solid rgb(215, 215, 215);
+    background-color: rgb(240, 240, 240);
     width: 20%;
     height: 100vh;
     position: fixed;
-    
-}
-.close_slide{
-    position: fixed;
-    width: 5%;
-    height: fit-content;
-    padding: 1% 1.2%;
     top: 0;
-}
-.close_slide ul li a img{
-    width: 100%;
-}
-.menu_icon{
+    left: 0;
     display: flex;
-    padding: 70% 10%;
-    width: 15%;
     flex-direction: column;
-    height: fit-content;
-    justify-content: center;
+}
+
+.close_slide {
+    display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
 }
-.menu_icon ul li{
-    padding-top: 40%;
-}
-.menu_icon ul li a img{
+
+.close_slide ul {
     width: 100%;
 }
-.support{
-    padding-top: 80%;
-    padding-left: 10%;
-    padding-right: 10%;
-    /* padding: 50% 10%; */
-    position: absolute;
-    width: 100%;
-    height: fit-content;
-    bottom: 0;
+
+.close_slide ul li a img {
+    width: 30px;
 }
-.support ul li{
-    padding-top: 2%;
-}
-.support ul li a img{
-    width: 15%;
-}
-main{
-    width: 80%;
-    margin: 0;
-    padding: 20px;
+
+.menu_icon {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
 }
 
-#search-box{
+.menu_icon ul {
+    width: 100%;
+    padding: 0;
+}
+
+.menu_icon ul li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.menu_icon ul li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+
+.menu_icon ul li a img {
+    width: 50px;
+}
+
+.menu_icon ul li a p {
+    margin-top: 5px;
+    font-size: 1.2em;
+}
+
+.support {
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.support ul {
+    padding: 0;
+}
+
+.support ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.support ul li a {
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+.support ul li a img {
+    width: 30px;
+}
+
+.support ul li a p {
+    margin-left: 10px;
+    font-size: 1em;
+}
+
+main {
+    width: 80%;
+    margin-left: 20%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#search-box {
     display: flex;
     align-items: center;
     padding: 10px;
     width: 300px;
     margin: 20px auto;
-    background: rgb(215, 215, 215);
+    background: rgb(255, 255, 255);
     border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
-#search-box #search-text{
+#search-box:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#search-box #search-text {
     border: none;
     outline: none;
     background: none;
     font-size: 18px;
     width: 0;
     padding: 0;
-    transition: all 0.25s ease-in-out;
-    overflow-wrap: break-word;
+    transition: width 0.75s ease-in-out;
 }
 
-#search-box:hover #search-text, #search-box #search-text:valid{
-    width: 300px;
-    padding: 10px 0px 15px 15px;
+#search-box:hover #search-text, #search-box #search-text:valid {
+    width: 250px;
+    padding: 10px;
 }
 
-#search-box #search-btn{
+#search-box #search-btn {
     background-color: #fff;
     cursor: pointer;
     border: none;
-    padding: 15px;
+    padding: 10px;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#search-box #search-btn:hover {
+    background-color: #f1f1f1;
+}
+
+#video-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.video-item {
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    max-width: 200px;
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+.video-description {
+    padding: 10px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid rgb(215, 215, 215);
+    }
+
+    main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #search-box {
+        width: 100%;
+        margin: 10px;
+    }
 }

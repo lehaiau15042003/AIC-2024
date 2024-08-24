@@ -15,6 +15,7 @@
             border: 0;
             margin: 0;
             list-style: none;
+            text-decoration: none;
         }
         body {
             display: flex;
@@ -35,19 +36,19 @@
                 <li>
                     <a href="#">
                         <img src="{{url_for('static', path='images/icons8-home-96.png') }}" alt="Home">
-                        <p></p>
+                        <p id="content" class="hidden">Trang chủ</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/upload">
+                    <a href="/upload" style="cursor: pointer;">
                         <img src="{{ url_for('static', path='images/icons8-upload-96.png') }}" alt="Upload">
-                        <p></p>
+                        <p id="content" class="hidden">Đăng tải video</p>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <img src="{{ url_for('static', path='images/icons8-checkmark-96.png') }}" alt="Check">
-                        <p></p>
+                    <a href="#" style="cursor: pointer;">
+                        <img src="{{ url_for('static', path='images/icons8-checkmark-96.png') }}" alt="Check" style="cursor: pointer;">
+                        <p style="cursor: pointer;" id="content" class="hidden">Lịch sử tìm kiếm</p>
                     </a>
                 </li>
             </ul>
@@ -55,21 +56,21 @@
         <div class="support">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="#" style="width: 100%;">
                         <img src="{{ url_for('static', path='images/icons8-exclamation-mark-96.png') }}" alt="Support">
-                        <p></p>
+                        <p id="content" class="hidden">Ý kiến phản hồi</p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <img src="{{ url_for('static', path='images/icons8-ask-96.png') }}" alt="Help">
-                        <p></p>
+                        <p id="content" class="hidden">Trợ giúp</p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <img src="{{ url_for('static', path='images/icons8-setting-96.png') }}" alt="Settings">
-                        <p></p>
+                        <p id="content" class="hidden">Cài đặt</p>
                     </a>
                 </li>
             </ul>
@@ -90,6 +91,9 @@
             <input type="text" id="search-text" placeholder="What are you looking for?" required>
             <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
+        <div id="video-gallery">
+
+        </div>
     </main>
     <script src="{{ url_for('static', path='js/search.js') }}"></script>
 </body>
