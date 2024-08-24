@@ -27,6 +27,10 @@ nav {
     flex-direction: column;
 }
 
+.close_slide ul li a img{
+    width: 50%;
+}
+
 .close_slide {
     display: flex;
     align-items: center;
@@ -41,20 +45,38 @@ nav {
 
 .close_slide ul li a img {
     width: 30px;
+
 }
 
 .menu_icon {
     flex: 1;
     display: flex;
+
+    padding: 40% 5% !important;
+    width: fit-content;
     flex-direction: column;
+    /* height: fit-content; */
+    justify-content: center;
+
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
     padding: 20px 0;
 }
 
+
+.menu_icon ul li{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+    padding-top: 25%;
+}
 .menu_icon ul {
     width: 100%;
     padding: 0;
+
 }
 
 .menu_icon ul li {
@@ -63,6 +85,29 @@ nav {
     align-items: center;
     margin: 20px 0;
 }
+
+.menu_icon ul li a img{
+    width: 30%;
+}
+.menu_icon ul li a p{
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 3px 0 0 3%;
+    white-space: nowrap;
+    width: 40%;
+    font-size: 1.1em;
+    color: black
+}
+.support{
+    padding-top: 80%;
+    padding-left: 5%;
+    padding-right: 10%;
+    /* padding: 50% 10%; */
+    position: absolute;
+    width: 100%;
+    /* height: fit-content; */
+    bottom: 3%;
+
 
 .menu_icon ul li a {
     display: flex;
@@ -85,22 +130,43 @@ nav {
     position: absolute;
     bottom: 0;
     width: 100%;
+
 }
 
 .support ul {
     padding: 0;
 }
 
+.support ul li a{
+    width: 100%;
+  }
+
 .support ul li {
+
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
+.support ul li a img{
+    width: 12%;
+    height: fit-content;
+
+}
+.support ul li a p{
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 3% 0 5% 5%;
+    white-space: nowrap;
+    width: 40%;
+    font-size: 1.1em;
+    color: black
+  }
 .support ul li a {
     display: flex;
     align-items: center;
     color: black;
+
 }
 
 .support ul li a img {
@@ -209,4 +275,27 @@ main {
         width: 100%;
         margin: 10px;
     }
+}
+.id_header{
+    display: flex;
+    width: 100%;
+    position: fixed;
+    top: 2%;
+}
+.id_header ul li a{
+    display: flex;
+    width: 50%;
+}
+.id_header ul li a img{
+    width: 95%;
+}
+.id_header ul li a p{
+    position: fixed;
+    display: flex;
+    margin-left: 3.3%;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.6em;
+    justify-content: center;
+    flex-direction: column;
 }
