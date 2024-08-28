@@ -44,6 +44,7 @@ Base.metadata.create_all(bind=engine)'''
 
 templates = Jinja2Templates(directory="webapp/templates")
 app.mount("/static", StaticFiles(directory="webapp/static"), name="static")
+app.mount("/video", StaticFiles(directory="webapp/static/video"), name="video")
 
 '''def get_db():
     db  = SessionLocal()
@@ -54,7 +55,9 @@ app.mount("/static", StaticFiles(directory="webapp/static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse("page_DWB.html", {"request": request})
+    video_folder = Path("webapp/static/video")
+    video_files = [f.name for f in video_folder.glob("*") if f.is_file()]
+    return templates.TemplateResponse("page_DWB.html", {"request": request, "video": video_files})
 
 '''def resize_frame(frame, scale_percent=50):
     width = int(frame.shape[1] * scale_percent / 100)
@@ -74,4 +77,3 @@ async def search_video(query: str, db: Session = Depends(get_db)):
     videos = db.query(Video).filter(Video.description.ilike(f"%{query}%")).all()
     video_list = [{"video_path": video.video_path, "thumbnail_path": video.thumbnail_path,} for video in videos]
     return JSONResponse(content={"videos":video_list})'''
-    
