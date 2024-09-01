@@ -15,49 +15,56 @@ from typing import List
 #import cv2
 #from model.models import *
 import json
-#from sqlalchemy import create_engine, Column, Integer, String
-#from sqlalchemy.ext.declarative import declarative_base
-#from sqlalchemy.orm import sessionmaker, Session
+from pydantic import BaseModel
+from pymongo import MongoClient
+from pymongo.collection import Collection
 
 
 app = FastAPI()
 
-'''DATABASE_URL = ""
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-
-device = "cuda" if torch.cuda.is_available() else "cpu"
-
-model, preprocess = clip.load("ViT-B/32", device=device)
-faster_rcnn_model = detection.fasterrcnn_resnet50_fpn(pretrained=True)
-faster_rcnn_model.to(device).eval()
-
-class Video(Base):
-    __tablename__ = "videos",
-    id = Column(Integer, primary_key=True, index=True)
-    video_path = Column(String, index=True)
-    thumbnail_path = Column(String)
-    description = Column(String)
-
-Base.metadata.create_all(bind=engine)'''
+client = MongoClient("mongodb://localhost:27017/")
+db = client["AIC2024"] 
+videos_collection: Collection = db["Video"]
 
 templates = Jinja2Templates(directory="webapp/templates")
 app.mount("/static", StaticFiles(directory="webapp/static"), name="static")
-app.mount("/video", StaticFiles(directory="webapp/static/video"), name="video")
+app.mount("/videos", StaticFiles(directory="webapp/static/videos"), name="videos")
 
-'''def get_db():
-    db  = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()'''
+class VideoMetadata(BaseModel):
+    author: str
+    channel_id: str
+    channel_url: str
+    description: str
+    keywords: List[str]
+    length: int
+    publish_date: str
+    thumbnail_url: str
+    title: str
+    watch_url: str
+
+class VideosResponse(BaseModel):
+    videos: List[VideoMetadata]
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    video_folder = Path("webapp/static/video")
-    video_files = [f.name for f in video_folder.glob("*") if f.is_file()]
-    return templates.TemplateResponse("page_DWB.html", {"request": request, "video": video_files})
+    video_folder = Path("webapp/static/videos/video1")
+    if not video_folder.exists():
+        raise HTTPException(status_code=404, detail="Video folder not found")
+    video_files = [f.name for f in video_folder.glob("*.mp4") if f.is_file()]
+    print("Video files:", video_files)  
+    return templates.TemplateResponse("page_DWB.html", {"request": request, "videos": video_files})
+
+@app.get("/videos")
+async def get_videos():
+    try:
+        video_docs = videos_collection.find()
+        videos = []
+        for video in video_docs:
+            video["_id"] = str(video["_id"])
+            videos.append(video)
+        return JSONResponse(content={"videos": videos})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
 
 '''def resize_frame(frame, scale_percent=50):
     width = int(frame.shape[1] * scale_percent / 100)

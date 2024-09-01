@@ -49,7 +49,7 @@ def map_features_to_text(detected_objects, text_queries):
             results.append(similarity)
     return results
 
-video_path = "./static/upload/bird.mp4"
+video_path = ""
 frames = extract_frames(video_path)
 detected_objects = detect_objects(frames)
 text_queries = ["a person", "a car", "a bird", "a dog"]
