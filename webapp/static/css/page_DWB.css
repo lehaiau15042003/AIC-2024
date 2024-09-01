@@ -200,6 +200,33 @@ main{
     width: 70%;
     border-radius: 20px;
 }
+#video-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#video-gallery ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+}
+
+#video-gallery li {
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 320px;
+    text-align: center;
+}
+
+#video-gallery video {
+    width: 100%;
+    border-radius: 5px;
+}
 
 @media screen and (max-width: 800px) {
     .id_header ul li a p {

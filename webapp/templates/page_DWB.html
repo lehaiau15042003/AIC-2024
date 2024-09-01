@@ -78,118 +78,35 @@
         </div>
     </nav>
     <main>
-        <div class="id_header">
-            <ul>
-                <li>
-                    <a href="#">
-                        <img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="Video Camera">
-                        <p>DWB</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <form action="" id="search-box">
-            <input type="text" id="search-text" placeholder="What are you looking for?" required>
-            <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
-        <div id="video-gallery">
-
-        </div>
-        <div class="box_inf">
-            <li>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/bird.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video id="myVideo" controls>
-                        Trình duyệt của bạn không hỗ trợ
-                        <source src="{{ url_for('static', path='video/208442_small.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/Coca-Cola.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/bird.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/208442_small.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/Coca-Cola.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/bird.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/208442_small.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/Coca-Cola.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/bird.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/208442_small.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-                <a href="">
-                    <video controls>
-                        <source src="{{ url_for('static', path='video/Coca-Cola.mp4') }}" type="video/mp4">
-                    </video>
-                    <h2>Title</h2>
-                    <p>the inform</p>
-                </a>
-            </li>
-        </div>
+            <div class="id_header">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="Video Camera">
+                            <p>DWB</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <form action="" id="search-box">
+                <input type="text" id="search-text" placeholder="What are you looking for?" required>
+                <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <div class="box_inf">
+                <div id="video-gallery">
+                    <ul>
+                        {% for video in videos %}
+                            <li>
+                                <video width="320" height="240" controls>
+                                    <source src="{{ url_for('videos', path='video1/' ~ video) }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="video-description">{{ video }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
     </main>
     <script src="{{ url_for('static', path='js/search.js') }}"></script>
 </body>

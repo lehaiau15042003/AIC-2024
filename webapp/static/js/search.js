@@ -8,68 +8,80 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function search(searchText) {
-        const response = await fetch(`/search?query=${encodeURIComponent(searchText)}`);
-        const data = await response.json(); 
+        try {
+            const response = await fetch(`/search?query=${encodeURIComponent(searchText)}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json(); 
 
-        const videoGallery = document.getElementById('video-gallery');
-        videoGallery.innerHTML = '';
+            const videoGallery = document.getElementById('video-gallery');
+            videoGallery.innerHTML = '';
 
-        data.videos.forEach(video => {
-            const videoItem = document.createElement('div');
-            videoItem.className = 'video-item';
+            data.videos.forEach(video => {
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
 
-            const thumbnail = document.createElement('img');
-            thumbnail.src = video.thumbnail_path;
-            thumbnail.alt = video.description;
-            thumbnail.className = 'video-thumbnail';
+                const thumbnail = document.createElement('img');
+                thumbnail.src = video.thumbnail_path;
+                thumbnail.alt = video.description;
+                thumbnail.className = 'video-thumbnail';
 
-            const descriptionElement = document.createElement('div');
-            descriptionElement.className = 'video-description';
-            descriptionElement.innerText = video.description;
+                const descriptionElement = document.createElement('div');
+                descriptionElement.className = 'video-description';
+                descriptionElement.innerText = video.description;
 
-            videoItem.appendChild(thumbnail);
-            videoItem.appendChild(descriptionElement);
+                videoItem.appendChild(thumbnail);
+                videoItem.appendChild(descriptionElement);
 
-            videoItem.addEventListener('click', () => {
-                document.getElementById('video-player').src = video.video_path;
-                document.getElementById('frame-image').src = video.frame_image;
-                document.getElementById('description').innerText = video.description;
+                videoItem.addEventListener('click', () => {
+                    document.getElementById('video-player').src = video.video_path;
+                    document.getElementById('frame-image').src = video.frame_image;
+                    document.getElementById('description').innerText = video.description;
+                });
+
+                videoGallery.appendChild(videoItem);
             });
-
-            videoGallery.appendChild(videoItem);
-        });
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+        }
     }
+
     async function loadVideos() {
-        const response = await fetch('/videos');
-        const data = await response.json();
+        try {
+            const response = await fetch('/videos');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
 
-        const videoGallery = document.getElementById('video-gallery');
-        videoGallery.innerHTML = '';
+            const videoGallery = document.getElementById('video-gallery');
+            videoGallery.innerHTML = '';
 
-        data.videos.forEach(video => {
-            const videoItem = document.createElement('div');
-            videoItem.className = 'video-item';
+            data.videos.forEach(video => {
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
 
-            const thumbnail = document.createElement('img');
-            thumbnail.src = video.thumbnail_path;
-            thumbnail.alt = video.description;
-            thumbnail.className = 'video-thumbnail';
+                const thumbnail = document.createElement('img');
+                thumbnail.src = video.thumbnail_path;
+                thumbnail.alt = video.description;
+                thumbnail.className = 'video-thumbnail';
 
-            const descriptionElement = document.createElement('div');
-            descriptionElement.className = 'video-description';
-            descriptionElement.innerText = video.description;
+                const descriptionElement = document.createElement('div');
+                descriptionElement.className = 'video-description';
+                descriptionElement.innerText = video.description;
 
-            videoItem.appendChild(thumbnail);
-            videoItem.appendChild(descriptionElement);
+                videoItem.appendChild(thumbnail);
+                videoItem.appendChild(descriptionElement);
 
-            videoItem.addEventListener('click', () => {
-                document.getElementById('video-player').src = video.video_path;
-                document.getElementById('frame-image').src = video.frame_image;
-                document.getElementById('description').innerText = video.description;
+                videoItem.addEventListener('click', () => {
+                    document.getElementById('video-player').src = video.video_path;
+                    document.getElementById('frame-image').src = video.frame_image;
+                    document.getElementById('description').innerText = video.description;
+                });
+
+                videoGallery.appendChild(videoItem);
             });
-
-            videoGallery.appendChild(videoItem);
-        });
+        } catch (error) {
+            console.error('Error loading videos:', error);
+        }
     }
+
     loadVideos();
 });
