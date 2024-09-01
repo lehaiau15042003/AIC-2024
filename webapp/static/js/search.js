@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function search(searchText) {
         const response = await fetch(`/search?query=${encodeURIComponent(searchText)}`);
-        const data = await response.json();
+        const data = await response.json(); 
 
         const videoGallery = document.getElementById('video-gallery');
         videoGallery.innerHTML = '';
