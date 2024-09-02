@@ -1,3 +1,6 @@
+.venv
 venv
 .vs
 __pycache__
+app.py
+webapp/static/videos/

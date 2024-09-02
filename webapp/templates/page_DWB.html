@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mô tả ngắn về trang web của bạn">
+    <meta name="keywords" content="từ khóa, liên quan, đến, trang web">
+    <title>DWB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', path='css/page_DWB.css') }}">
+    <style>
+        * {
+            padding: 0;
+            border: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <script src="{{ url_for('static', path='js/close_slide.js') }}"></script>
+        <div class="close_slide">
+            <ul>
+                <li><a href="#" id="btn_close"><img src="{{ url_for('static', path='images/icons8-menu-96.png') }}" alt="Menu" ></a></li>
+            </ul>
+        </div>
+        <div class="menu_icon">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="{{url_for('static', path='images/icons8-home-96.png') }}" alt="Home">
+                        <p id="content" class="hidden">Trang chủ</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/upload" style="cursor: pointer;">
+                        <img src="{{ url_for('static', path='images/icons8-upload-96.png') }}" alt="Upload">
+                        <p id="content" class="hidden">Đăng tải video</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" style="cursor: pointer;">
+                        <img src="{{ url_for('static', path='images/icons8-checkmark-96.png') }}" alt="Check" style="cursor: pointer; height: fit-content;">
+                        <p style="cursor: pointer;" id="content" class="hidden">Lịch sử tìm kiếm</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="support">
+            <ul>
+                <li>
+                    <a href="#" style="width: 100%;">
+                        <img src="{{ url_for('static', path='images/icons8-exclamation-mark-96.png') }}" alt="Support">
+                        <p id="content" class="hidden">Ý kiến phản hồi</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-ask-96.png') }}" alt="Help">
+                        <p id="content" class="hidden">Trợ giúp</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-setting-96.png') }}" alt="Settings">
+                        <p id="content" class="hidden">Cài đặt</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+            <div class="id_header">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="Video Camera">
+                            <p>DWB</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <form action="" id="search-box">
+                <input type="text" id="search-text" placeholder="What are you looking for?" required>
+                <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <div class="box_inf">
+                <div id="video-gallery">
+                    <ul>
+                        {% for video in videos %}
+                            <li>
+                                <video width="320" height="240" controls>
+                                    <source src="{{ url_for('videos', path='video1/' ~ video) }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="video-description">{{ video }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+    </main>
+    <script src="{{ url_for('static', path='js/search.js') }}"></script>
+</body>
+</html>
