@@ -1,38 +1,22 @@
-from fastapi import FastAPI, Request, File, HTTPException, Depends
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse
-from pathlib import Path
-import numpy as np
-import os
-import shutil
-#import clip
-import io
-from typing import List
-#import torch
-#import torchvision.transforms as T
-#import torchvision.models.detection as detection
-#import cv2
-#from model.models import *
-import json
 from pydantic import BaseModel
 from pymongo import MongoClient
-from pymongo.collection import Collection
-
+from typing import List
 
 app = FastAPI()
+
 try:
     client = MongoClient("mongodb+srv://Milkyway2904:dat29042004@aic2024.jy2so.mongodb.net/")
-    db = client["AIC2024"] 
-    videos_collection: Collection = db["Video"]
+    db = client["AIC2024"]
     print("Connected to MongoDB")
 except Exception as e:
     raise HTTPException(status_code=500, detail=f"Error connecting to MongoDB: {str(e)}")
 
-
 templates = Jinja2Templates(directory="webapp/templates")
 app.mount("/static", StaticFiles(directory="webapp/static"), name="static")
-app.mount("/videos", StaticFiles(directory="webapp/static/videos"), name="videos")
 
 class VideoMetadata(BaseModel):
     author: str
@@ -52,34 +36,48 @@ class VideosResponse(BaseModel):
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     try:
-        video_docs = videos_collection.find()
-        videos = [video for video in video_docs]
-        for video in videos:
+        all_videos = []
+        for collection_name in db.list_collection_names():
+            collection = db[collection_name]
+            videos = list(collection.find({}))
+            all_videos.extend(videos)
+        for video in all_videos:
             video["_id"] = str(video["_id"])
-        print(videos)
-        return templates.TemplateResponse("page_DWB.html", {"request": request, "videos": videos})
+            video['thumbnail_url'] = video.get('thumbnail_url', '')
+            video['watch_url'] = video.get('watch_url', '')
+        return templates.TemplateResponse("page_DWB.html", {"request": request, "videos": all_videos})
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
 
-@app.get("/videos")
+@app.get("/videos", response_model=VideosResponse)
 async def get_videos(skip: int = 0, limit: int = 10):
     try:
-        video_docs = videos_collection.find().skip(skip).limit(limit)
-        videos = [video for video in video_docs]
-        for video in videos:
+        all_videos = []
+        for collection_name in db.list_collection_names():
+            collection = db[collection_name]
+            video_docs = collection.find().skip(skip).limit(limit)
+            videos = [video for video in video_docs]
+            all_videos.extend(videos)
+        for video in all_videos:
             video["_id"] = str(video["_id"])
-        return JSONResponse(content={"videos": videos})
+
+        return {"videos": all_videos}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
 
 @app.get("/search", response_model=VideosResponse)
 async def search_video(query: str):
     try:
-        video_docs = videos_collection.find({"title": {"$regex": query, "$options": "i"}})
-        videos = []
-        for video in video_docs:
+        all_videos = []
+        for collection_name in db.list_collection_names():
+            collection = db[collection_name]
+            video_docs = collection.find({"title": {"$regex": query, "$options": "i"}})
+            videos = [video for video in video_docs]
+            all_videos.extend(videos)
+
+        for video in all_videos:
             video["_id"] = str(video["_id"])
-            videos.append(video)
-        return JSONResponse(content={"videos": videos})
+
+        return {"videos": all_videos}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error searching videos: {str(e)}")

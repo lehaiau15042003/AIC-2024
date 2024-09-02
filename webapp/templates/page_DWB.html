@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mô tả ngắn về trang web của bạn">
-    <meta name="keywords" content="từ khóa, liên quan, đến, trang web">
+    <meta name="description" content="Trang web để xem và tìm kiếm video mới nhất">
+    <meta name="keywords" content="video, tìm kiếm, xem video, tin tức, giải trí">
     <title>DWB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
     integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -99,9 +99,6 @@
                         <li>
                             <iframe width="560" height="315" src="{{ video.watch_url | replace('watch?v=', 'embed/') }}" frameborder="0" allowfullscreen></iframe>
                             <h3>{{ video.title }}</h3>
-                            <p><strong>Author:</strong> {{ video.author }}</p>
-                            <p><strong>Description:</strong> {{ video.description }}</p>
-                            <p><strong>Publish Date:</strong> {{ video.publish_date }}</p>
                         </li>
                     {% endfor %}
                 </ul>
