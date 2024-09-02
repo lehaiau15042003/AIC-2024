@@ -203,7 +203,12 @@ main{
 #video-gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-y: auto;
+    height: calc(100vh - 200px);
+    padding: 20px;
 }
 
 #video-gallery ul {
@@ -212,6 +217,7 @@ main{
     flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 #video-gallery li {
@@ -223,9 +229,17 @@ main{
     text-align: center;
 }
 
+#video-gallery img {
+    width: 100%; 
+}
+
 #video-gallery video {
     width: 100%;
     border-radius: 5px;
+}
+
+#video-gallery a:hover {
+    color: gray;
 }
 
 @media screen and (max-width: 800px) {
