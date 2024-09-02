@@ -78,35 +78,35 @@
         </div>
     </nav>
     <main>
-            <div class="id_header">
+        <div class="id_header">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="Video Camera">
+                        <p>DWB</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <form action="" id="search-box">
+            <input type="text" id="search-text" placeholder="What are you looking for?" required>
+            <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <div class="box_inf">
+            <div id="video-gallery">
                 <ul>
-                    <li>
-                        <a href="#">
-                            <img src="{{ url_for('static', path='images/icons8-video-camera-100.png') }}" alt="Video Camera">
-                            <p>DWB</p>
-                        </a>
-                    </li>
+                    {% for video in videos %}
+                        <li>
+                            <iframe width="560" height="315" src="{{ video.watch_url | replace('watch?v=', 'embed/') }}" frameborder="0" allowfullscreen></iframe>
+                            <h3>{{ video.title }}</h3>
+                            <p><strong>Author:</strong> {{ video.author }}</p>
+                            <p><strong>Description:</strong> {{ video.description }}</p>
+                            <p><strong>Publish Date:</strong> {{ video.publish_date }}</p>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
-            <form action="" id="search-box">
-                <input type="text" id="search-text" placeholder="What are you looking for?" required>
-                <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
-            <div class="box_inf">
-                <div id="video-gallery">
-                    <ul>
-                        {% for video in videos %}
-                            <li>
-                                <video width="320" height="240" controls>
-                                    <source src="{{ url_for('videos', path='video1/' ~ video) }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <p class="video-description">{{ video }}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+        </div>
     </main>
     <script src="{{ url_for('static', path='js/search.js') }}"></script>
 </body>

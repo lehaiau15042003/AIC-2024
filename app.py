@@ -21,10 +21,14 @@ from pymongo.collection import Collection
 
 
 app = FastAPI()
+try:
+    client = MongoClient("mongodb+srv://Milkyway2904:dat29042004@aic2024.jy2so.mongodb.net/")
+    db = client["AIC2024"] 
+    videos_collection: Collection = db["Video1"]
+    print("Connected to MongoDB")
+except Exception as e:
+    raise HTTPException(status_code=500, detail=f"Error connecting to MongoDB: {str(e)}")
 
-client = MongoClient("mongodb+srv://Milkyway2904:dat29042004@aic2024.jy2so.mongodb.net/")
-db = client["AIC2024"] 
-videos_collection: Collection = db["Video1"]
 
 templates = Jinja2Templates(directory="webapp/templates")
 app.mount("/static", StaticFiles(directory="webapp/static"), name="static")
@@ -47,23 +51,35 @@ class VideosResponse(BaseModel):
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    video_folder = Path("webapp/static/videos")
-    if not video_folder.exists():
-        raise HTTPException(status_code=404, detail="Video folder not found")
-    video_files = [f.name for f in video_folder.glob("*.mp4") if f.is_file()]
-    print("Video files:", video_files)  
-    return templates.TemplateResponse("page_DWB.html", {"request": request, "videos": video_files})
-
-@app.get("/videos")
-async def get_videos():
     try:
         video_docs = videos_collection.find()
+        videos = [video for video in video_docs]
+        for video in videos:
+            video["_id"] = str(video["_id"])
+        print(videos)
+        return templates.TemplateResponse("page_DWB.html", {"request": request, "videos": videos})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
+
+@app.get("/videos")
+async def get_videos(skip: int = 0, limit: int = 10):
+    try:
+        video_docs = videos_collection.find().skip(skip).limit(limit)
+        videos = [video for video in video_docs]
+        for video in videos:
+            video["_id"] = str(video["_id"])
+        return JSONResponse(content={"videos": videos})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
+
+@app.get("/search", response_model=VideosResponse)
+async def search_video(query: str):
+    try:
+        video_docs = videos_collection.find({"title": {"$regex": query, "$options": "i"}})
         videos = []
         for video in video_docs:
             video["_id"] = str(video["_id"])
             videos.append(video)
         return JSONResponse(content={"videos": videos})
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
-
-
+        raise HTTPException(status_code=500, detail=f"Error searching videos: {str(e)}")
