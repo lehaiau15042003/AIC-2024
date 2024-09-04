@@ -85,3 +85,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadVideos();
 });
+
+
+// inform search
+
+document.getElementById('search-btn').addEventListener('click', sendMessage);
+document.getElementById('search-text').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') sendMessage();
+});
+
+function sendMessage() {
+    const input = document.getElementById('search-text');
+    const message = input.value.trim();
+    
+    if (message) {
+        addMessage(message, 'user');
+        input.value = '';
+
+        // Giả lập phản hồi từ bot sau 1 giây
+        setTimeout(() => {
+            const botReply = generateBotReply(message);
+            addMessage(botReply, 'bot');
+        }, 1000);
+    }
+}
+
+function addMessage(text, sender) {
+    const messageContainer = document.getElementById('messages');
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', sender);
+    messageElement.textContent = text;
+    messageContainer.appendChild(messageElement);
+    messageContainer.scrollTop = messageContainer.scrollHeight;  // Tự động cuộn xuống cuối
+}
+
+function generateBotReply(userMessage) {
+    // Logic trả lời bot cơ bản, có thể thay bằng gọi API GPT-3, GPT-4, v.v.
+    return `Bot: Bạn đã nói "${userMessage}"`;
+}
+

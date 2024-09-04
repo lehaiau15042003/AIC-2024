@@ -89,11 +89,15 @@
                 </ul>
             </div>
             <form action="" id="search-box">
+                <div id="message" class="message">
+                    <!-- inform message here -->
+                </div>
                 <input type="text" id="search-text" placeholder="What are you looking for?" required>
                 <button id="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
             <div class="box_inf">
                 <div id="video-gallery">
+                        
                     <ul>
                         {% for video in videos %}
                             <li>
