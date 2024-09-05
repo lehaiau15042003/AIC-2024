@@ -98,23 +98,22 @@ main{
     justify-content: flex-end;
 }
 
-#search-box{
+#search-box {
     display: flex;
     align-items: center;
-    padding: 10px;
-    width: 300px;
-    margin: 20px auto;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     background: rgb(215, 215, 215);
     border-radius: 30px;
-    height: auto;
-    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 1000px;
+    max-width: 600px; 
+    padding: 5px;
     z-index: 0;
-}
-
-.message{
-    flex: 1;
-    overflow-y: auto;
-
+    box-sizing: border-box;
+    transition: all 1s ease;
 }
 
 #search-box #search-text{
@@ -127,21 +126,29 @@ main{
     height: auto;
     word-wrap: break-word;
     white-space: normal;
-    transition: all 0.75s ease-in-out;
-}
-
-#search-box:hover #search-text, #search-box #search-text:valid{
-    width: 300px;
-    padding: 10px 0px 15px 15px;
+    border-radius: 30px;
+    transition: all 1s ease-in-out;
 }
 
 #search-box #search-btn{
     background-color: #fff;
     cursor: pointer;
     border: none;
-    padding: 15px;
+    padding: 10px 15px;
     border-radius: 50%;
     font-size: 18px;
+}
+#search-box:hover #search-text, #search-box #search-text:valid{
+    width: 1000px;
+    padding: 10px 0px 15px 15px;
+}
+
+#search-btn i {
+    font-size: 18px;
+}
+
+#search-box:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 .id_header{
     display: flex;
@@ -208,7 +215,12 @@ main{
 #video-gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-y: auto;
+    height: calc(100vh - 200px);
+    padding: 20px;
 }
 
 #video-gallery ul {
@@ -217,6 +229,7 @@ main{
     flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 #video-gallery li {
@@ -228,9 +241,62 @@ main{
     text-align: center;
 }
 
+#video-gallery img {
+    width: 100%; 
+}
+
 #video-gallery video {
     width: 100%;
     border-radius: 5px;
+}
+
+#video-gallery a:hover {
+    color: gray;
+}
+
+#video-player-container {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+#video-player {
+    display: flex;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+}
+#video-details {
+    text-align: center;
+    margin-top: 20px;
+}
+#frame-image {
+    max-width: 100%;
+    height: auto;
+}
+#description {
+    font-size: 18px;
+    margin-top: 10px;
+}
+.video-item {
+    cursor: pointer;
+}
+
+.video-thumbnail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-thumbnail {
+    max-width: 100%;
+    height: auto;
 }
 
 .video-description p{
