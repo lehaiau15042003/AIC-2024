@@ -209,9 +209,8 @@ main{
     color: grey;
 }
 .box_inf li video{
-    margin-top: 10%;
     width: 70%;
-    border-radius: 20px;
+    border-radius: 30px;
 }
 #video-gallery {
     display: flex;
@@ -267,8 +266,11 @@ main{
     align-items: center;
 }
 #video-player {
+    display: flex;
     width: 80%;
     height: 80%;
+    top: 10%;
+    left: 10%;
 }
 #video-details {
     text-align: center;
@@ -297,7 +299,10 @@ main{
     height: auto;
 }
 
-@media screen and (max-width: 800px) {
+.video-description p{
+    font-family: Arial, Helvetica, sans-serif;
+}
+@media screen and (max-width: 1300px) {
     .id_header ul li a p {
         margin-left: 5%;
         font-size: 1.4em ;

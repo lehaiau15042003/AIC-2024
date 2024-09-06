@@ -1,29 +1,3 @@
-// let clickClose = false
-// document.getElementsByClassName('close_slide').addEventListener('click', function(event){
-//     event.preventDefaulse();
-
-//     if (clickClose) {
-//         this.innerHTML = 'Click to close slide';
-//     } else {
-//         this.innerHTML = 'The text is longer';
-//     }
-//     clickClose = !clickClose;
-// })
-
-// const clickBox = document.querySelectorAll('.close_slide');
-// const btnClick = document.querySelector('#btn_close');
-// const showSlide = document.querySelector('.menu_icon');
-
-// const lineContainer = document.querySelector(".close_slide");
-// const menu = document.querySelector(".menu_icon");
-
-// lineContainer.addEventListener("click", () => {
-//   lineContainer.classList.toggle("active");
-//   menu.classList.toggle("open");
-// });
-
-// Đảm bảo mã JavaScript chỉ chạy sau khi toàn bộ DOM đã tải xong
-// Đảm bảo mã JavaScript chỉ chạy sau khi toàn bộ DOM đã tải xong
 document.addEventListener('DOMContentLoaded', function() {
   // Lấy tất cả các nút có class "close_slide"
   var closeButtons = document.querySelectorAll('.close_slide');
@@ -54,3 +28,38 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// click to close slide
+document.addEventListener('DOMContentLoaded', function() {
+    // Lấy tất cả các nút có class "close_slide"
+    var closeButtons = document.querySelectorAll('.close_slide');
+  
+    // Kiểm tra nếu có nút nào được tìm thấy
+    if (closeButtons && closeButtons.length > 0) {
+        // Lặp qua tất cả các nút và thêm sự kiện click
+        closeButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+  
+                // Lấy tất cả các phần tử với class "hidden" trong thẻ <nav>
+                var hiddenElements = document.querySelectorAll('nav .hidden');
+  
+                // Kiểm tra nếu có phần tử nào được tìm thấy
+                if (hiddenElements && hiddenElements.length > 0) {
+                    // Lặp qua tất cả các phần tử và kiểm tra trạng thái hiển thị
+                    hiddenElements.forEach(function(hiddenElement) {
+                        if (hiddenElement.style.display === 'none' || hiddenElement.style.display === '') {
+                            hiddenElement.style.display = 'block'; // Hiển thị phần tử
+                        } else {
+                            hiddenElement.style.display = 'none'; // Ẩn phần tử
+                        }
+                    });
+                } else {
+                    console.error('Không tìm thấy phần tử nào với class "hidden" trong thẻ <nav>!');
+                }
+            });
+        });
+    } else {
+        console.error('Không tìm thấy nút nào với class "close_slide"!');
+    }
+  });
+  
