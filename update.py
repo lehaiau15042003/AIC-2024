@@ -10,18 +10,24 @@ metadata_collection = db['Video12']
 
 embedding_folder = "E:/data/CLIP features (ViT-B32)/CLIP_12"
 documents = metadata_collection.find({})
+
 for doc in documents:
     filename_DB = doc.get('filename')
     for filename in os.listdir(embedding_folder):
         if filename.endswith(".npy"): 
             if filename_DB in filename:
                 file_path = os.path.join(embedding_folder, filename)
+                
+                try:
+                    data = np.load(file_path)
+                    
+                    with open(file_path, 'rb') as f:
+                        grid_fs_id = grid_fs.put(f, filename=filename, content_type='application/octet-stream')
 
-                data = np.load(file_path)
-
-                grid_fs_id = grid_fs.put(data.tobytes(), filename=filename, content_type='application/octet-stream')
-
-                print(f'Uploaded {filename} with GridFS ID: {grid_fs_id}')
-        
-                metadata_collection.update_one({"_id": doc["_id"]}, {"$set": {"gridfs_id": grid_fs_id}})
-                break
+                    print(f'Uploaded {filename} with GridFS ID: {grid_fs_id}')
+                    
+                    metadata_collection.update_one({"_id": doc["_id"]}, {"$set": {"gridfs_id": grid_fs_id}})
+                    
+                    break
+                except Exception as e:
+                    print(f"Error processing file {filename}: {str(e)}")

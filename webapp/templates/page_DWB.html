@@ -97,7 +97,7 @@
                     {% for video in videos %}
                         <li class="video-item">
                             <div class="video-thumbnail-container">
-                                <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" data-url="{{ video.watch_url | replace('watch?v=', 'embed/') }}">
+                                <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" data-url="{{ video.watch_url | replace('watch?v=', 'embed/') }}" loading="lazy">
                             </div>
                             <h3>{{ video.title }}</h3>
                         </li>
@@ -107,6 +107,7 @@
         </div>
         <div id="video-player-container">
             <iframe id="video-player" src="" frameborder="0" allowfullscreen></iframe>
+            <button id="close-btn">Close</button>
         </div>
         <div id="video-details">
             <img id="frame-image" src="" alt="Thumbnail">

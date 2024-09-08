@@ -10,21 +10,21 @@ import numpy as np
 from bson import ObjectId
 from transformers import CLIPProcessor, CLIPModel
 import torch
-
-# Khởi tạo mô hình CLIP
-model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
 processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
-# Hàm lấy embedding cho văn bản
 def get_text_embedding(query: str):
     inputs = processor(text=query, return_tensors="pt", padding=True)
     with torch.no_grad():
         text_features = model.get_text_features(**inputs)
-    return text_features.squeeze().cpu().numpy()
+    text_embedding = text_features.squeeze().cpu().numpy()
+    print(f"Text embedding for query '{query}': {text_embedding}")
+    return text_embedding
+
 
 app = FastAPI()
 
-# Kết nối MongoDB và GridFS
 try:
     client = MongoClient("mongodb+srv://Milkyway2904:dat29042004@aic2024.jy2so.mongodb.net/")
     db = client["AIC2024"]
@@ -33,11 +33,9 @@ try:
 except Exception as e:
     raise HTTPException(status_code=500, detail=f"Error connecting to MongoDB: {str(e)}")
 
-# Thiết lập templates và static files
 templates = Jinja2Templates(directory="webapp/templates")
 app.mount("/static", StaticFiles(directory="webapp/static"), name="static")
 
-# Định nghĩa schema cho video
 class VideoMetadata(BaseModel):
     author: str
     channel_id: str
@@ -53,34 +51,40 @@ class VideoMetadata(BaseModel):
 class VideosResponse(BaseModel):
     videos: List[VideoMetadata]
 
-# Hàm tìm kiếm dựa trên embedding
-def find_videos_by_embedding(query_embedding, threshold=0.5):
+def find_videos_by_embedding(query_embedding, threshold=0.3, limit=50):
     results = []
     for collection_name in db.list_collection_names():
         collection = db[collection_name]
-        videos = list(collection.find({}))
+        videos = list(collection.find({}).limit(limit))
         for video in videos:
             gridfs_id = video.get('gridfs_id')
             if gridfs_id:
                 try:
-                    file = fs.get(ObjectId(gridfs_id))  # Lấy file từ GridFS
-                    video_embedding = np.load(file)  # Tải embedding từ file
+                    file = fs.get(ObjectId(gridfs_id))
+                    file_data = file.read()
+                    video_embedding = np.frombuffer(file_data, dtype=np.float32)
+                    
+                    if query_embedding.shape != video_embedding.shape:
+                        print(f"Size mismatch: query embedding {query_embedding.shape}, video embedding {video_embedding.shape}")
+                        continue
+                    
+                    print(f"Video embedding for {video.get('title', 'Unknown')}: {video_embedding}")
                     similarity = np.dot(query_embedding, video_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(video_embedding))
-                    if similarity >= threshold:  # So sánh độ tương đồng với ngưỡng
+                    print(f"Similarity: {similarity} for video {video.get('title', 'Unknown')}")
+                    if similarity >= threshold:
                         video["_id"] = str(video["_id"])
                         results.append(video)
                 except Exception as e:
-                    print(f"Error loading embedding for video: {video['_id']}, Error: {str(e)}")
+                    print(f"Error loading embedding for video: {video.get('title', 'Unknown')} (ID: {video['_id']}), Error: {str(e)}")
     return results
 
-# Trang gốc hiển thị tất cả video
 @app.get("/", response_class=HTMLResponse)
-async def root(request: Request):
+async def root(request: Request, skip: int = 0, limit: int = 10):
     try:
         all_videos = []
         for collection_name in db.list_collection_names():
             collection = db[collection_name]
-            videos = list(collection.find({}))
+            videos = list(collection.find({}).skip(skip).limit(limit))
             for video in videos:
                 video["_id"] = str(video["_id"])
                 video['thumbnail_url'] = video.get('thumbnail_url', '')
@@ -90,7 +94,6 @@ async def root(request: Request):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
 
-# API lấy danh sách video
 @app.get("/videos", response_model=VideosResponse)
 async def get_videos(skip: int = 0, limit: int = 10):
     try:
@@ -106,28 +109,27 @@ async def get_videos(skip: int = 0, limit: int = 10):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving videos: {str(e)}")
 
-# API tìm kiếm video theo tiêu đề
-@app.get("/search", response_model=VideosResponse)
-async def search_video(query: str):
-    try:
-        all_videos = []
-        for collection_name in db.list_collection_names():
-            collection = db[collection_name]
-            video_docs = collection.find({"title": {"$regex": query, "$options": "i"}})
-            for video in video_docs:
-                video["_id"] = str(video["_id"])
-                all_videos.append(video)
-
-        return {"videos": all_videos}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error searching videos: {str(e)}")
-
-# API tìm kiếm video theo embedding
 @app.post("/search_by_embedding", response_model=VideosResponse)
-async def search_by_embedding(query_embedding: List[float], threshold: float = 0.5):
+async def search_by_embedding(request: Request):
     try:
-        query_embedding = np.array(query_embedding)
-        results = find_videos_by_embedding(query_embedding, threshold)
+        request_data = await request.json()
+        query_embedding = np.array(request_data.get('query_embedding'))
+        threshold = request_data.get('threshold', 0.3)
+        limit = request_data.get('limit', 50)
+        
+        results = find_videos_by_embedding(query_embedding, threshold, limit)
+        
+        if not results:
+            raise HTTPException(status_code=404, detail="No videos found matching the query.")
+        
         return {"videos": results}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error searching videos by embedding: {str(e)}")
+
+@app.get("/get_embedding")
+async def get_embedding(query: str):
+    try:
+        embedding = get_text_embedding(query)
+        return JSONResponse(content=embedding.tolist())
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating embedding: {str(e)}")
