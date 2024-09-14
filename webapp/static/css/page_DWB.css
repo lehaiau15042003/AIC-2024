@@ -54,6 +54,7 @@ nav{
 .menu_icon ul li a p:hover{
     color: gray;
 }
+
 .support{
     padding-top: 80%;
     padding-left: 5%;
@@ -111,6 +112,7 @@ main{
     width: 1000px;
     max-width: 600px; 
     padding: 5px;
+    margin-left: 10%;
     z-index: 0;
     box-sizing: border-box;
     transition: all 1s ease;
@@ -310,6 +312,9 @@ main{
     .id_header ul li a img{
         width: 75%;
     }
+    #search-box{
+        width: 300px;
+    }
 }
 
 @media screen and (max-width: 1150px){
@@ -330,6 +335,9 @@ main{
     }
     nav{
         width: 17%;
+    }
+    #search-box{
+        width: 200px;
     }
 }
 
