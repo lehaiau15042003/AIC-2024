@@ -10,20 +10,27 @@ import numpy as np
 from bson import ObjectId
 from transformers import CLIPProcessor, CLIPModel
 import torch
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
 processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
-def get_text_embedding(query: str):
-    inputs = processor(text=query, return_tensors="pt", padding=True)
-    with torch.no_grad():
-        text_features = model.get_text_features(**inputs)
-    text_embedding = text_features.squeeze().cpu().numpy()
-    print(f"Text embedding for query '{query}': {text_embedding}")
-    return text_embedding
-
-
 app = FastAPI()
+
+def get_text_embedding(query: str):
+    if not query.strip():
+        raise ValueError("Query must be a non-empty string.")
+    try:
+        inputs = processor(text=query, return_tensors="pt", padding=True).to(device)
+        with torch.no_grad():
+            text_features = model.get_text_features(**inputs)
+        text_embedding = text_features.squeeze().cpu().numpy()
+        print(f"Text embedding for query '{query}': {text_embedding}")
+        return text_embedding
+    except Exception as e:
+        print(f"Error generating embedding: {str(e)}")
+        raise
+
 
 try:
     client = MongoClient("mongodb+srv://Milkyway2904:dat29042004@aic2024.jy2so.mongodb.net/")
@@ -57,25 +64,18 @@ def find_videos_by_embedding(query_embedding, threshold=0.3, limit=50):
         collection = db[collection_name]
         videos = list(collection.find({}).limit(limit))
         for video in videos:
-            gridfs_id = video.get('gridfs_id')
-            if gridfs_id:
-                try:
-                    file = fs.get(ObjectId(gridfs_id))
-                    file_data = file.read()
-                    video_embedding = np.frombuffer(file_data, dtype=np.float32)
-                    
-                    if query_embedding.shape != video_embedding.shape:
-                        print(f"Size mismatch: query embedding {query_embedding.shape}, video embedding {video_embedding.shape}")
-                        continue
-                    
-                    print(f"Video embedding for {video.get('title', 'Unknown')}: {video_embedding}")
-                    similarity = np.dot(query_embedding, video_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(video_embedding))
-                    print(f"Similarity: {similarity} for video {video.get('title', 'Unknown')}")
-                    if similarity >= threshold:
-                        video["_id"] = str(video["_id"])
-                        results.append(video)
-                except Exception as e:
-                    print(f"Error loading embedding for video: {video.get('title', 'Unknown')} (ID: {video['_id']}), Error: {str(e)}")
+            keyframe_embeddings = fs.find({"metadata.video_id": video["_id"]})
+            for keyframe in keyframe_embeddings:
+                video_embedding = np.frombuffer(keyframe.read(), dtype=np.float32)
+
+                if query_embedding.shape != video_embedding.shape:
+                    print(f"Size mismatch: query embedding {query_embedding.shape}, video embedding {video_embedding.shape}")
+                    continue
+                
+                similarity = np.dot(query_embedding, video_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(video_embedding))
+                if similarity >= threshold:
+                    video["_id"] = str(video["_id"])
+                    results.append(video)
     return results
 
 @app.get("/", response_class=HTMLResponse)
@@ -130,6 +130,7 @@ async def search_by_embedding(request: Request):
 async def get_embedding(query: str):
     try:
         embedding = get_text_embedding(query)
+        print(f"Generated embedding: {embedding}")
         return JSONResponse(content=embedding.tolist())
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating embedding: {str(e)}")

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoGallery = document.getElementById('video-gallery');
     const videoPlayerContainer = document.getElementById('video-player-container');
     const videoPlayer = document.getElementById('video-player');
-    const closeVideoBtn = document.getElementById('close-video');
+    const closeVideoBtn = document.getElementById('close-btn');
 
     document.getElementById('search-box').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -17,7 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
             videoGallery.innerHTML = '<p>Loading...</p>';
 
             const embeddingResponse = await fetch(`/get_embedding?query=${encodeURIComponent(searchText)}`);
+            if (!embeddingResponse.ok) throw new Error('Failed to fetch embedding');
+                    
             const embedding = await embeddingResponse.json();
+            if (!Array.isArray(embedding) || embedding.length === 0) {
+                throw new Error('Invalid embedding received');
+            }
 
             const response = await fetch('/search_by_embedding', {
                 method: 'POST',
@@ -34,14 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('Network response was not ok');
 
             const data = await response.json(); 
-            
+            if (!data || !Array.isArray(data.videos)) {
+                throw new Error('Invalid response structure');
+            }
+
             videoGallery.innerHTML = '';
             if (data.videos.length === 0) {
                 videoGallery.innerHTML = '<p>No videos found</p>';
                 return;
             }
 
-            data.videos.forEach(video => {
+            const videoItems = data.videos.map(video => {
                 const videoItem = document.createElement('li');
                 videoItem.className = 'video-item';
 
@@ -61,14 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 titleElement.innerText = video.title;
                 videoItem.appendChild(titleElement);
 
-                videoGallery.appendChild(videoItem);
+                return videoItem;
             });
 
+            videoItems.forEach(item => videoGallery.appendChild(item));
             console.log('Response data:', data);
 
         } catch (error) {
             console.error('Error fetching search results:', error);
             alert(`Error fetching search results. Please try again later. Error: ${error.message}`);
+            videoGallery.innerHTML = '<p>Error fetching results. Please try again.</p>';
         }
     }
 
@@ -78,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const url = thumbnail.getAttribute('data-url');
             videoPlayer.src = url;
             videoPlayer.style.display = 'block';
-            videoPlayerContainer.style.display = 'block';
+            videoPlayerContainer.style.display = 'flex';
         }
     });
 
@@ -94,35 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
         videoPlayer.src = '';
     });
 
-    document.getElementById('search-btn').addEventListener('click', sendMessage);
-    document.getElementById('search-text').addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') sendMessage();
+    document.getElementById('search-btn').addEventListener('click', () => {
+        const searchText = document.getElementById('search-text').value;
+        if (searchText.trim() !== '') {
+            search(searchText);
+        }
     });
 
-    function sendMessage() {
-        const input = document.getElementById('search-text');
-        const message = input.value.trim();
-
-        if (message) {
-            addMessage(message, 'user');
-            input.value = '';
-            setTimeout(() => {
-                const botReply = generateBotReply(message);
-                addMessage(botReply, 'bot');
-            }, 1000);
+    document.getElementById('search-text').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const searchText = this.value;
+            if (searchText.trim() !== '') {
+                search(searchText);
+            }
         }
-    }
-
-    function addMessage(text, sender) {
-        const messageContainer = document.getElementById('messages');
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message', sender);
-        messageElement.textContent = text;
-        messageContainer.appendChild(messageElement);
-        messageContainer.scrollTop = messageContainer.scrollHeight; 
-    }
-
-    function generateBotReply(userMessage) {
-        return `Bot: Bạn đã nói "${userMessage}"`;
-    }
+    });
 });
